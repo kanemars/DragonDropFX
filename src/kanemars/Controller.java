@@ -1,23 +1,9 @@
 package kanemars;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-
-import java.net.URL;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controller {
     public TextArea textArea;
@@ -25,7 +11,6 @@ public class Controller {
     static String newline = "\n";
     static int newlineLength = newline.length();
     final Clipboard clipboard = Clipboard.getSystemClipboard();
-    static Logger log = Logger.getLogger("DragonDropFX");
 
     public void mouseReleased(Event event) {
         mouseDownStart = textArea.getCaretPosition();
