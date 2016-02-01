@@ -10,14 +10,15 @@ import java.util.List;
 
 public class DragonDropMainApplication extends Application {
 
+    public static List<String> parameters;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+        parameters = getParameters().getRaw();
+
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Dragon Drop FX");
         primaryStage.setScene(new Scene(root, 300, 275));
-
-        final List<String> parameters = getParameters().getRaw();
-        final String cutAndPasteFile = parameters.get(0);
 
         primaryStage.show();
     }
