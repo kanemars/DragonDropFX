@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanemars.Controller">
-   <TabPane fx:id="tabPanes" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-     <tabs>
-       <Tab text="Main" fx:id="mainTab">
-         <content>
-           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" /><TextArea fx:id="textArea" onContextMenuRequested="#mouseReleased" text="Welcome to&#10;DragonDropFX&#10;">
-
-         </TextArea>
-         </content>
-       </Tab>
-     </tabs>
-   </TabPane>
+    <TabPane fx:id="tabPanes" prefHeight="4000.0" prefWidth="2000.0" tabClosingPolicy="UNAVAILABLE">
+    </TabPane>
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>

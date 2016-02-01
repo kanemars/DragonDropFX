@@ -1,12 +1,14 @@
 package kanemars;
 
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -16,40 +18,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public TextArea textArea;
     public TabPane tabPanes;
     int mouseDownStart;
     static String newline = "\n";
     static int newlineLength = newline.length();
     final Clipboard clipboard = Clipboard.getSystemClipboard();
 
-    public void mouseReleased(Event event) {
-        mouseDownStart = textArea.getCaretPosition();
-        String lineSelected = selectLine();
-        if (lineSelected.length() > 0) {
-            final ClipboardContent content = new ClipboardContent();
-            content.putString(lineSelected);
-            clipboard.setContent(content);
-        }
-    }
+//    public void mouseReleased(Event event) {
+//        mouseDownStart = textArea.getCaretPosition();
+//        String lineSelected = selectLine();
+//        if (lineSelected.length() > 0) {
+//            final ClipboardContent content = new ClipboardContent();
+//            content.putString(lineSelected);
+//            clipboard.setContent(content);
+//        }
+//    }
+//
 
-    private String selectLine() {
-        int lineStart = mouseDownStart;
-        int lineEnd = mouseDownStart;
-        String text = textArea.getText();
-        while (lineStart > 0 && !textArea.getText(lineStart, lineEnd).startsWith(newline))
-            lineStart--;
-
-        // Adjustments
-        if (textArea.getText(lineStart, lineEnd).startsWith(newline))
-            lineStart += newlineLength;
-
-        // styledText.getText(lineStart, end)
-        lineEnd = textArea.getText().indexOf(newline, lineEnd);
-
-        return textArea.getText(lineStart, lineEnd).trim();
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,14 +62,48 @@ public class Controller implements Initializable {
         } catch (IOException ex) {
 
         }
-
-
-
     }
 
     private TextArea addTab(String tabTitle) {
+        TextArea newArea = addTextArea ();
+
         Tab tab = new Tab(tabTitle);
         tabPanes.getTabs().add(tab);
-        return textArea;
+        tab.setContent(newArea);
+        return newArea;
+    }
+
+    private TextArea addTextArea () {
+        TextArea newArea = new TextArea();
+
+        newArea.setOnMouseClicked((MouseEvent event) -> {
+            if(newArea.getSelectedText().length() == 0) {
+                int caret = newArea.getCaretPosition();
+                int lineStart = caret;
+                int lineEnd = caret;
+                while (lineStart > 0 && !newArea.getText(lineStart, lineEnd).startsWith(newline))
+                    lineStart--;
+
+                // Adjustments
+                if (newArea.getText(lineStart, lineEnd).startsWith(newline))
+                    lineStart += newlineLength;
+
+                lineEnd = newArea.getText().indexOf(newline, lineEnd);
+
+                newArea.selectRange(lineStart, lineEnd);
+
+            }
+            copyToClipboard(newArea.getSelectedText().trim());
+
+        });
+        return newArea;
+    }
+
+    private void copyToClipboard (String s) {
+        if (s.length() > 0) {
+            final ClipboardContent content = new ClipboardContent();
+            content.putString(s);
+            clipboard.setContent(content);
+        }
     }
 }
